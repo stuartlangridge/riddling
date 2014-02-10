@@ -15,8 +15,6 @@
         Stuart Langridge
     </author>
 
-    <preference name="permissions" value="none"/>
-
     <gap:platform name="ios" />
     <gap:platform name="android" />
 
