@@ -36,4 +36,6 @@
     <icon src="icons/android/hdpi.png" gap:platform="android" gap:density="hdpi" width="72" height="72" />
     <icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" width="96" height="96" />
 
+    <preference name="permissions" value="none" />
+
 </widget>
