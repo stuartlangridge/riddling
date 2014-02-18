@@ -8,6 +8,7 @@
 <title>Riddling</title>
 <script src="riddles.js"></script>
 <script src="utils.js"></script>
+<script src="iscroll-lite.js"></script>
 <style>
 html, body {
     margin: 0;
@@ -225,6 +226,17 @@ body.right #right {
     margin-right: -20px;
     outline: 0;
 }
+.answers .backcont {
+    overflow: auto;
+    height: 100px;
+    z-index: 6000;
+    position: relative;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(50%,rgba(255,255,255,1)), color-stop(100%,rgba(255,255,255,0))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,1) 50%,rgba(255,255,255,0) 100%); /* W3C */
+}
 
 button.reset {
     display: block;
@@ -379,6 +391,10 @@ blockquote {
     display: none;
 }
 
+.scrollbase {
+    position: relative;
+    height: 260px;
+}
 </style>
 </head>
 <body>
@@ -402,11 +418,17 @@ blockquote {
     </div>
 
     <div class="subsidiary answers">
-        <button class="back" ontouchstart="unflip(); return false" onclick="unflip(); return false">Back</button>
-        <ul>
-            <li><strong></strong><span>no answers, yet. Keep trying!</span></li>
-        </ul>
-        <button class="reset" onclick="resetgame()">Reset game</button></p>
+        <div class="backcont">
+            <button class="back" ontouchstart="unflip(); return false" onclick="unflip(); return false">Back</button>
+        </div>
+        <div class="scrollbase">
+            <div>
+                <ul>
+                    <li><strong></strong><span>no answers, yet. Keep trying!</span></li>
+                </ul>
+                <button class="reset" onclick="resetgame()">Reset game</button></p>
+            </div>
+        </div>
     </div>
 
     <div id="right"><div>
@@ -498,6 +520,7 @@ function updateAnswersPage() {
         li.appendChild(span);
         ul.appendChild(li);
     }
+    setTimeout(function () { myScroll.refresh(); }, 0);
 }
 function loadAnswersFromStorage() {
     if (window.localStorage) {
@@ -629,6 +652,8 @@ document.addEventListener('deviceready', function() {
     setUpPhonegapMedia();
     interceptLinks();
 }, false);
+
+var myScroll = new IScroll('.scrollbase');
 </script>
 </body>
 </html>
