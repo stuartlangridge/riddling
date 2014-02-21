@@ -53,10 +53,44 @@ li a {
     height: 100%;
     width: 100%;
     text-indent: -9999em;
+    position: relative;
+    z-index: 12;
 }
 li.ios a { background: url(logo-apple.svg) center center no-repeat; background-size: 100% 100%; }
 li.android a { background: url(logo-android.svg) center center no-repeat; background-size: 100% 100%; }
 li.ubuntu a { background: url(logo-ubuntu.svg) center center no-repeat; background-size: 100% 100%; }
+p.install-ubuntu {
+    border: 1px dashed #a8a8a8;
+    padding: 2em;
+    border-radius: 10px;
+    position: relative;
+}
+p.install-ubuntu::before {
+    display: block;
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    margin-left: 65px;
+    height: 0px;
+    width: 0px;
+    text-indent: -9000em;
+    border: 30px solid green;
+    border-color: transparent transparent #a8a8a8 transparent;
+    content: ".";
+}
+p.install-ubuntu::after {
+    display: block;
+    position: absolute;
+    top: -59px;
+    left: 50%;
+    margin-left: 65px;
+    height: 0px;
+    width: 0px;
+    text-indent: -9000em;
+    border: 30px solid green;
+    border-color: transparent transparent #f1f1f1 transparent;
+    content: ".";
+}
 </style>
 </head>
 <body>
@@ -68,7 +102,26 @@ li.ubuntu a { background: url(logo-ubuntu.svg) center center no-repeat; backgrou
     <li class="android"><a href="#">Android</a></li>
     <li class="ubuntu"><a href="#">Ubuntu</a></li>
 </ul>
+<p class="install-ubuntu">To install Riddling on Ubuntu phones, search for <code>Riddling</code> in the Apps scope</p>
 <footer>
 <p>Riddling, <a href="http://www.kryogenix.org/">Kryogenix</a> 2014</p>
+<script>
+var iu = document.querySelector(".install-ubuntu");
+var curdisp = window.localStorage.iuShow;
+if (curdisp != "show") {
+    iu.style.display = "none";
+}
+document.querySelector("li.ubuntu a").addEventListener("click", function(e) {
+    curdisp = window.localStorage.iuShow;
+    if (curdisp == "show") {
+        curdisp = "no";
+        iu.style.display = "none";
+    } else {
+        curdisp = "show";
+        iu.style.display = "block";
+    }
+    localStorage.iuShow = curdisp;
+}, false);
+</script>
 </body>
 </html>
