@@ -21,6 +21,9 @@
     <preference name="orientation" value="portrait" />
     <preference name="fullscreen" value="true" />
     <preference name="DisallowOverscroll" value="true"/>
+    
+    <!-- ios only: only iphone, not ipad -->
+    <preference name="target-device" value="handset" />
 
     <gap:plugin name="org.apache.cordova.device" />
     <gap:plugin name="org.apache.cordova.inappbrowser" />
@@ -34,6 +37,7 @@
 
     <icon src="icons/ios/icon.png" gap:platform="ios" width="57" height="57" />
     <icon src="icons/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
+    <icon src="icons/ios/icon-120.png" gap:platform="ios" width="120" height="120" />
     <icon src="icons/ios/icon_at_2x.png" gap:platform="ios" width="114" height="114" />
     <icon src="icons/ios/icon-72_at_2x.png" gap:platform="ios" width="144" height="144" />
     <icon src="icons/android/ldpi.png" gap:platform="android" gap:density="ldpi" width="36" height="36" />

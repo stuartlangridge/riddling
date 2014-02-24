@@ -61,9 +61,13 @@ li.android a { background: url(logo-android.svg) center center no-repeat; backgr
 li.ubuntu a { background: url(logo-ubuntu.svg) center center no-repeat; background-size: 100% 100%; }
 p.install-ubuntu {
     border: 1px dashed #a8a8a8;
-    padding: 2em;
-    border-radius: 10px;
+    padding: 1.5em 2em;
+    border-radius: 10px;http://kryogenix.org/riddling/
     position: relative;
+    box-sizing: border-box;
+    font-size: 0.9em;
+    font-weight: 300;
+    max-width: 400px;
 }
 p.install-ubuntu::before {
     display: block;
@@ -77,6 +81,10 @@ p.install-ubuntu::before {
     border: 30px solid green;
     border-color: transparent transparent #a8a8a8 transparent;
     content: ".";
+}
+p.install-ubuntu code {
+    font-family: "Helvetica Neue", "Roboto", "Segoe UI", "Ubuntu", sans-serif;
+    font-weight: 400;
 }
 p.install-ubuntu::after {
     display: block;
@@ -108,7 +116,7 @@ p.install-ubuntu::after {
     <li class="android"><a href="https://play.google.com/store/apps/details?id=org.kryogenix.riddling">Android</a></li>
     <li class="ubuntu"><a href="#">Ubuntu</a></li>
 </ul>
-<p class="install-ubuntu">To install Riddling on Ubuntu phones, search for <code>Riddling</code> in the Apps scope</p>
+<p class="install-ubuntu">To install Riddling on Ubuntu phones, search for <code>Riddling</code> in the Apps&nbsp;scope.</p>
 <footer>
 <p>Riddling, <a href="http://www.kryogenix.org/">Kryogenix</a> 2014</p>
 <script>
