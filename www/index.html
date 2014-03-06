@@ -585,7 +585,16 @@ function setUpPhonegapMedia() {
 }
 function playMedia(mediaElementId) {
     if (PHONEGAP_MEDIA) {
-        PHONEGAP_MEDIA_DICT[mediaElementId].play();
+        if (device.platform == "iOS") {
+            // Don't play when screen is locked; this means that
+            // we play as incidental sound, not as media, and so
+            // we respect the phone's ringer volume, not media volume
+            PHONEGAP_MEDIA_DICT[mediaElementId].play({
+                playAudioWhenScreenIsLocked: false
+            });
+        } else {
+            PHONEGAP_MEDIA_DICT[mediaElementId].play();
+        }
     } else {
         document.getElementById(mediaElementId).play();
     }
