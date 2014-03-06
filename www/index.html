@@ -158,7 +158,8 @@ h1 button {
     height: 44px;
     padding-left: 3%;
 }
-h1 button.menu { float: left; }
+h1 button.menu, h1 button.sound { float: left; }
+h1 button.sound { padding-top: 4px; }
 h1 button.riddling { 
     float: right;
     color: #7c7c7c; 
@@ -408,7 +409,8 @@ blockquote {
 
     <div id="main">
     <h1><button class="riddling" onclick="toggleAbout(); return false" ontouchstart="toggleAbout(); return false">Riddling</button> 
-        <button class="menu" onclick="showAnswers(); return false;" ontouchstart="showAnswers();return false;"><img src="icon-menu.svg"></button></h1>
+        <button class="menu" onclick="showAnswers(); return false;" ontouchstart="showAnswers();return false;"><img src="icon-menu.svg"></button>
+        <button class="sound" onclick="toggleSound(); return false;" ontouchstart="toggleSound();return false;"><img src="audio-volume-high-symbolic.svg"></button></h1>
         <h2><span>Level </span><strong><span>1</span></strong></h2>
         <p><span>Clue<span>Here is the clue</span></span></p>
         <form autocomplete="off">
@@ -464,8 +466,8 @@ blockquote {
     &lsquo;Whereas once I was blind, but now I can see.&rsquo;&rdquo;</p>
     <footer>&mdash; Ted, <em>The Game</em>, 1997</footer>
     <p>Tell others of your victory!</p>
-    <p><a href="http://twitter.com/home?status=I&rsquo;ve finally completed @sil's Riddling! Get it for your phone at http://www.kryogenix.org/code/riddling"><img src="tweetblue.png" alt="Tweet"></a>
-        <a href="https://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D=Riddling+for+Ubuntu&p%5Bsummary%5D=I've+completed+Riddling!+A+puzzle+involving+intelligence,+psychology,+lateral+thinking,+research,+and+guesswork&p[url]=http://www.kryogenix.org/code/riddling"><img src="fbblue.png" alt="Facebook"></a>
+    <p><a href="http://twitter.com/home?status=I&rsquo;ve finally completed @sil's Riddling! Get it for your phone at http://www.kryogenix.org/riddling"><img src="tweetblue.png" alt="Tweet"></a>
+        <a href="https://www.facebook.com/sharer/sharer.php?s=100&p%5Btitle%5D=Riddling+for+Ubuntu&p%5Bsummary%5D=I've+completed+Riddling!+A+puzzle+involving+intelligence,+psychology,+lateral+thinking,+research,+and+guesswork&p[url]=http://www.kryogenix.org/riddling"><img src="fbblue.png" alt="Facebook"></a>
     <button class="reset" onclick="resetgame()">Reset game</button></p>
 </blockquote>
 </div>
@@ -584,19 +586,22 @@ function setUpPhonegapMedia() {
     });
 }
 function playMedia(mediaElementId) {
+    if (document.querySelector("h1 button.sound img").src.indexOf("mute") != -1) return;
     if (PHONEGAP_MEDIA) {
-        if (device.platform == "iOS") {
-            // Don't play when screen is locked; this means that
-            // we play as incidental sound, not as media, and so
-            // we respect the phone's ringer volume, not media volume
-            PHONEGAP_MEDIA_DICT[mediaElementId].play({
-                playAudioWhenScreenIsLocked: false
-            });
-        } else {
-            PHONEGAP_MEDIA_DICT[mediaElementId].play();
-        }
+        PHONEGAP_MEDIA_DICT[mediaElementId].play();
     } else {
         document.getElementById(mediaElementId).play();
+    }
+}
+
+function toggleSound() {
+    var img = document.querySelector("h1 button.sound img");
+    if (img.src.indexOf("mute") == -1) {
+        img.src = "audio-volume-muted-symbolic.svg";
+        localStorage.setItem(RIDDLING_GAME + "sound", "mute");
+    } else {
+        img.src = "audio-volume-high-symbolic.svg";
+        localStorage.setItem(RIDDLING_GAME + "sound", "play");
     }
 }
 
@@ -650,6 +655,10 @@ document.getElementsByTagName("form")[0].addEventListener("submit", function(e) 
 
 if (window.localStorage && localStorage[RIDDLING_GAME + "quote"] == "quote") {
     document.getElementById("quote").parentNode.removeChild(document.getElementById("quote"));
+}
+
+if (window.localStorage && localStorage[RIDDLING_GAME + "sound"] == "mute") {
+    document.querySelector("h1 button.sound img").src = "audio-volume-muted-symbolic.svg";
 }
 
 loadAnswersFromStorage();
