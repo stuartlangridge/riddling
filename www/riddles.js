@@ -97,7 +97,7 @@ var riddles = [
   {
     "clue": "Metherabum",
     "answer": -2076269714,
-    "explanation": "GQECAhVZKQYSCREdJA5CVVUaPwQFAhcHb1tXARcbJ0xVVysbOB0PAhcab1tXIgsTJggJAw=="
+    "explanation": "GQECAhVZKQYSCREdJA5CVVUaPwQFAhcHb1tXARcbJ0xVVysbOB0PAhcab1tXIgsTJggJA0s="
   },
   {
     "clue": "Henry R. Selden",
@@ -135,7 +135,7 @@ var riddles = [
     "explanation": "Jk9AUUA+KSZYQUZCWEICDhwOFxtXUiZPQFEKAxAXTEBRAgsRCUJeVh4MBhUCGFdTVwMIV1tCUFRPQFEXAAcRDAFEVVobD0JeVgYBF0RVWhMNFwQHEAwGTw=="
   },
   {
-    "clue": "<span style='font-size: 9pt'>10888869450418352160768000000</span>",
+    "clue": "<span style='font-size: 8pt'>10888869450418352160768000000</span>",
     "answer": -1025905440,
     "explanation": "flFAUF1VUkBdVVBdEgMDXldTQV9DXFFYQx4="
   },
