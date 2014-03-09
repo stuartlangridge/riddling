@@ -548,12 +548,19 @@ function loadAnswersFromStorage() {
         } catch(e) {}
     }
 }
+var LAST_FLIPPED_ANSWER_TIME = 0;
 function showAnswers() {
+    var timenow = Date.now();
+    if (timenow - LAST_FLIPPED_ANSWER_TIME < 1000) return;
+    LAST_FLIPPED_ANSWER_TIME = timenow;
     answer.blur();
     document.body.classList.add("show-subsidiary");
     document.body.classList.add("answers");
 }
 function unflip() {
+    var timenow = Date.now();
+    if (timenow - LAST_FLIPPED_ANSWER_TIME < 1000) return;
+    LAST_FLIPPED_ANSWER_TIME = timenow;
     document.body.classList.remove("show-subsidiary");
     document.body.classList.remove("answers");
     setTimeout(function() { answer.focus(); }, 300);
