@@ -120,10 +120,14 @@ p.install-ubuntu::after {
         background-size: 100px 100px;
     }
 }
+p a {
+    color: #a8a8c8;
+}
 </style>
 </head>
 <body>
 <h1>Riddling</h1>
+<p>As featured in the <a href="http://www.nytimes.com/2014/04/10/technology/personaltech/review-eerie-and-interesting-apps-for-games-and-amusement.html">New York Times</a>
 <p>A puzzle game involving intelligence, psychology, lateral thinking, research, and guesswork. For Google fiends, librarians, mathematicians, linguists, and pub quiz winners.</p>
 <p id="download">Download for your device.</p>
 <ul>
@@ -156,11 +160,12 @@ document.querySelector("li.ubuntu a").addEventListener("click", function(e) {
 
 var quotes = [
     "..... Aaaaaaand I'm stuck on Level 4",
+    "I hate you.",
     "Question 7 is making me hate this game and thus life.",
     "oh, I failed the first Q, you b*****d.",
     "This makes for amazing loo breaks.",
     "I have a load of work to get done today. You’re not helping."
-]
+];
 setInterval(function() {
     var q = document.getElementsByClassName("quote")[0];
     q.className = "quote faded";
