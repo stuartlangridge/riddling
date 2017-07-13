@@ -2,8 +2,8 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "org.kryogenix.riddling"
-        versionCode = "13" 
-        version     = "1.0.0" >
+        versionCode = "15" 
+        version     = "1.1.0" >
 
     <name>Riddling</name>
 
@@ -25,9 +25,12 @@
     <!-- ios only: only iphone, not ipad -->
     <preference name="target-device" value="handset" />
 
+    <!-- android only: hide three-dots menu button -->
+    <preference name="android-minSdkVersion" value="14" />
+
     <gap:plugin name="org.apache.cordova.device" />
     <gap:plugin name="org.apache.cordova.inappbrowser" />
-    <gap:plugin name="org.apache.cordova.media" />
+    <gap:plugin name="org.apache.cordova.media" version="0.2.8" />
     
     <access origin="*" />
 

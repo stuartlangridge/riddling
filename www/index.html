@@ -275,14 +275,14 @@ button.reset {
     margin-right: 6px;
     color: #dd4814;
     display: inline-block;
-    width: 12%;
+    width: 24%;
 }
 .answers ul li span {
     padding-top: 7px;
     color: #7c7c7c;
     display:inline-block;
     float: left;
-    width: 80%;
+    width: 73%;
     font-weight: 400;
 }
 .answers ul li em {
@@ -396,6 +396,14 @@ blockquote {
     position: relative;
     height: 260px;
 }
+
+#ad-slot {
+    position: absolute;
+    top: 500px;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
 </style>
 </head>
 <body>
@@ -417,6 +425,9 @@ blockquote {
             <input autocomplete="off" autocorrect="off" autocapitalize="off" placeholder="type the answer for the next level" id="answer">
             <input type="submit" value="Go">
         </form>
+
+        <div id="ad-slot">
+        </div>
     </div>
 
     <div class="subsidiary answers">
@@ -537,12 +548,19 @@ function loadAnswersFromStorage() {
         } catch(e) {}
     }
 }
+var LAST_FLIPPED_ANSWER_TIME = 0;
 function showAnswers() {
+    var timenow = Date.now();
+    if (timenow - LAST_FLIPPED_ANSWER_TIME < 1000) return;
+    LAST_FLIPPED_ANSWER_TIME = timenow;
     answer.blur();
     document.body.classList.add("show-subsidiary");
     document.body.classList.add("answers");
 }
 function unflip() {
+    var timenow = Date.now();
+    if (timenow - LAST_FLIPPED_ANSWER_TIME < 1000) return;
+    LAST_FLIPPED_ANSWER_TIME = timenow;
     document.body.classList.remove("show-subsidiary");
     document.body.classList.remove("answers");
     setTimeout(function() { answer.focus(); }, 300);
@@ -603,6 +621,32 @@ function toggleSound() {
         img.src = "audio-volume-high-symbolic.svg";
         localStorage.setItem(RIDDLING_GAME + "sound", "play");
     }
+}
+
+var inmobi_conf;
+function showAds() {
+    // set location of ad slot. It needs to be positioned from the top, because the
+    // bottom moves up when the keyboard is shown!
+    document.getElementById("ad-slot").style.top = (document.documentElement.clientHeight - 55) + "px";
+
+    inmobi_conf = {
+        siteid : "55c732afb6b04e6498555e93e9479489",
+        slot: "15",
+        test: true,
+        manual: true,
+        autoRefresh: 60,
+        targetWindow : "_blank",
+        onError: function(code) {
+            console.log("got an ad error, code", code);
+        }
+    };
+    var adscr = document.createElement("script");
+    adscr.src = "http://cf.cdn.inmobi.com/ad/inmobi.js";
+    document.getElementsByTagName("head")[0].appendChild(adscr);
+    setTimeout(function() {
+        console.log("go go gadget ads");
+        _inmobi.getNewAd(document.getElementById('ad-slot'));
+    }, 5000);
 }
 
 document.getElementsByTagName("form")[0].addEventListener("submit", function(e) {
@@ -669,9 +713,18 @@ document.addEventListener('deviceready', function() {
     IS_PHONEGAP = true;
     setUpPhonegapMedia();
     interceptLinks();
+    if (device.platform == "Android") {
+        showAds();
+    }
 }, false);
+setTimeout(function() {
+    if (!IS_PHONEGAP) {
+        showAds();
+    }
+}, 5000);
 
 var myScroll = new IScroll('.scrollbase');
+
 </script>
 </body>
 </html>
