@@ -4,11 +4,19 @@
 <meta charset=utf8>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300' rel='stylesheet' type='text/css'>
+<meta name="apple-mobile-web-app-title" content="Riddling">
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300|Just+Me+Again+Down+Here' rel='stylesheet' type='text/css'>
 <title>Riddling</title>
 <script src="riddles.js"></script>
 <script src="utils.js"></script>
 <script src="iscroll-lite.js"></script>
+<link rel="icon" type="image/png" href="icons/favicon-16.png" sizes="16x16">
+<link rel="icon" type="image/png" href="icons/favicon-32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="icons/favicon-96.png" sizes="96x96">
+<link rel="apple-touch-icon" href="icons/older-iphone-120.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/iphone-6plus-180.png">
+<link rel="apple-touch-icon" sizes="152x152" href="icons/ipad-retina-152.png">
+<link rel="apple-touch-icon" sizes="167x167" href="icons/ipad-pro-167.png">
 <style>
 html, body {
     margin: 0;
@@ -158,7 +166,7 @@ h1 button {
     height: 44px;
     padding-left: 3%;
 }
-h1 button.menu, h1 button.sound { float: left; }
+h1 button.menu, h1 button.sound, h1 button.helpbutton { float: left; }
 h1 button.sound { padding-top: 4px; padding-left: 4%; }
 h1 button.riddling { 
     float: right;
@@ -275,14 +283,14 @@ button.reset {
     margin-right: 6px;
     color: #dd4814;
     display: inline-block;
-    width: 12%;
+    width: 24%;
 }
 .answers ul li span {
     padding-top: 7px;
     color: #7c7c7c;
     display:inline-block;
     float: left;
-    width: 80%;
+    width: 73%;
     font-weight: 400;
 }
 .answers ul li em {
@@ -397,14 +405,6 @@ blockquote {
     height: 260px;
 }
 
-#ad-slot {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    text-align: center;
-}
-
 #lswarning {
     position: absolute;
     top: 0;
@@ -418,6 +418,65 @@ blockquote {
     background: #990033;
     display: none;
 }
+
+#help {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    color: #cc0000;
+    text-align: center;
+    z-index: 80;
+    padding: 0em;
+    background: transparent;
+    font-family: "Just Me Again Down Here", cursive;
+    display: none;
+}
+#help[class^="help"] { display: block; }
+#help > div {
+    display: none;
+    position: absolute;
+    background: rgba(200,255,0,0.7);
+    font-size: 7vw;
+    line-height: 1em;
+    box-sizing: border-box;
+    outline: 2000px solid rgba(0,0,0,0.3);
+}
+#help #help-level {
+    top: 44px;
+    width: 40%;
+    left: 0;
+    height: 145px;
+    text-align: left;
+    padding-top: 5px;
+    padding-left: 5px;
+}
+#help.help-level #help-level { display: block; }
+#help #help-clue {
+    top: 44px;
+    width: 53%;
+    right: 0;
+    height: 145px;
+    text-align: right;
+    padding-left: 10%;
+    padding-top: 5px;
+    padding-right: 5px;
+}
+#help.help-clue #help-clue { display: block; }
+#help #help-answer {
+    top: 194px;
+    width: 100%;
+    left: 0;
+    height: 230px;
+    text-align: center;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    justify-content: flex-end;
+    flex-direction: column;
+}
+#help.help-answer #help-answer { display: flex; }
 </style>
 </head>
 <body>
@@ -432,7 +491,8 @@ blockquote {
     <div id="main">
     <h1><button class="riddling" onclick="toggleAbout(); return false" ontouchstart="toggleAbout(); return false">Riddling</button> 
         <button class="menu" onclick="showAnswers(); return false;" ontouchstart="showAnswers();return false;"><img src="icon-menu.svg"></button>
-        <button class="sound" onclick="toggleSound(); return false;" ontouchstart="toggleSound();return false;"><img src="audio-volume-high-symbolic.svg"></button></h1>
+        <button class="sound" onclick="toggleSound(); return false;" ontouchstart="toggleSound();return false;"><img src="audio-volume-high-symbolic.svg"></button>
+        <button class="helpbutton" onclick="showHelp(); return false;" ontouchstart="showHelp();return false;"><img src="dialog-question-symbolic.svg"></button></h1>
         <h2><span>Level </span><strong><span>1</span></strong></h2>
         <p><span>Clue<span>Here is the clue</span></span></p>
         <form autocomplete="off">
@@ -440,8 +500,6 @@ blockquote {
             <input type="submit" value="Go">
         </form>
 
-        <div id="ad-slot">
-        </div>
     </div>
 
     <div class="subsidiary answers">
@@ -506,6 +564,15 @@ work in Private Browsing, because we need to save where you’re up to in
 order that you can play. Please reload <em>Riddling</em> in your normal
 browser. Our apologies.</div>
 
+<div id="help">
+    <div id="help-level">This is the level number (<span class="levelno">1</span>)</div>
+    <div id="help-clue">This is the thing corresponding to the level number
+        (<span class="levelno">1</span>)</div>
+    <div id="help-answer"><span class="sigh">You want to get to the next level 
+    (<span class="levelup">1</span>), so you need to type
+    the answer corresponding to “<span class="levelup">1</span>”.</span></div>
+</div>
+
 <script>
 var RIDDLING_GAME = "riddling";
 var LEVEL = 0, answer=document.getElementById("answer"), answers = ['',''];
@@ -567,12 +634,19 @@ function loadAnswersFromStorage() {
         } catch(e) {}
     }
 }
+var LAST_FLIPPED_ANSWER_TIME = 0;
 function showAnswers() {
+    var timenow = Date.now();
+    if (timenow - LAST_FLIPPED_ANSWER_TIME < 1000) return;
+    LAST_FLIPPED_ANSWER_TIME = timenow;
     answer.blur();
     document.body.classList.add("show-subsidiary");
     document.body.classList.add("answers");
 }
 function unflip() {
+    var timenow = Date.now();
+    if (timenow - LAST_FLIPPED_ANSWER_TIME < 1000) return;
+    LAST_FLIPPED_ANSWER_TIME = timenow;
     document.body.classList.remove("show-subsidiary");
     document.body.classList.remove("answers");
     setTimeout(function() { answer.focus(); }, 300);
@@ -598,7 +672,6 @@ function incrementLevel() {
     }, 300);
 }
 
-var IS_PHONEGAP = false, PHONEGAP_MEDIA = false, PHONEGAP_MEDIA_DICT = {};
 function interceptLinks() {
     Array.prototype.slice.call(document.querySelectorAll("a")).forEach(function(a) {
         a.addEventListener("click", function(e) {
@@ -607,21 +680,10 @@ function interceptLinks() {
         }, false);
     });
 }
-function setUpPhonegapMedia() {
-    PHONEGAP_MEDIA = true;
-    Array.prototype.slice.call(document.querySelectorAll("audio")).forEach(function(a) {
-        var firstsrc = a.getElementsByTagName("source")[0].getAttribute("src");
-        if (device.platform == "Android") { firstsrc = "file:///android_asset/www/" + firstsrc; }
-        PHONEGAP_MEDIA_DICT[a.id] = new Media(firstsrc);
-    });
-}
+
 function playMedia(mediaElementId) {
     if (document.querySelector("h1 button.sound img").src.indexOf("mute") != -1) return;
-    if (PHONEGAP_MEDIA) {
-        PHONEGAP_MEDIA_DICT[mediaElementId].play();
-    } else {
-        document.getElementById(mediaElementId).play();
-    }
+    document.getElementById(mediaElementId).play();
 }
 
 function toggleSound() {
@@ -635,34 +697,38 @@ function toggleSound() {
     }
 }
 
+function showHelp() {
+    Array.prototype.slice.call(document.querySelectorAll("span.levelno")).forEach(function(s) {
+        s.innerHTML = LEVEL.toString();
+    })
+    Array.prototype.slice.call(document.querySelectorAll("span.levelup")).forEach(function(s) {
+        s.innerHTML = (LEVEL + 1).toString();
+    })
+    document.getElementById("help").className = "help-level";
+}
+function nextHelp(e) {
+    e.preventDefault();
+    var h = document.getElementById("help");
+    var nclass;
+    switch (h.className) {
+        case "help-level": nclass = "help-clue"; break;
+        case "help-clue": nclass = "help-answer"; break;
+        case "help-answer": nclass = null; break;
+        default: nclass = null; break;
+    }
+    if (nclass) {
+        h.className = nclass;
+    } else {
+        h.className = "";
+    }
+}
+
 function confirmLocalStorageOK() {
     try {
         localStorage.setItem("lsok", "yes");
     } catch(e) {
         document.getElementById("lswarning").style.display = "block";
     }
-}
-
-var inmobi_conf;
-function showAds() {
-    inmobi_conf = {
-        siteid : "55c732afb6b04e6498555e93e9479489",
-        slot: "15",
-        test: true,
-        manual: true,
-        autoRefresh: 60,
-        targetWindow : "_blank",
-        onError: function(code) {
-            console.log("got an ad error, code", code);
-        }
-    };
-    var adscr = document.createElement("script");
-    adscr.src = "http://cf.cdn.inmobi.com/ad/inmobi.js";
-    document.getElementsByTagName("head")[0].appendChild(adscr);
-    setTimeout(function() {
-        console.log("go go gadget ads");
-        _inmobi.getNewAd(document.getElementById('ad-slot'));
-    }, 5000);
 }
 
 document.getElementsByTagName("form")[0].addEventListener("submit", function(e) {
@@ -726,6 +792,8 @@ confirmLocalStorageOK();
 loadAnswersFromStorage();
 incrementLevel();
 document.getElementById("whiteness").style.display = "none";
+document.getElementById("help").addEventListener("click", nextHelp, false);
+document.getElementById("help").addEventListener("touchstart", nextHelp, false);
 
 var myScroll = new IScroll('.scrollbase');
 
